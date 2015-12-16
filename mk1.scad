@@ -3,7 +3,8 @@ fn = 12;
 module main() {
     translate([s(0),s(0),s(110)])
         head();
-    translate([s(0),s(0),s(50)]) body();
+    translate([s(0),s(0),s(22)])
+        body();
     leftArm();
     rightArm();
     translate([s(-20), s(0), s(-60)])
@@ -25,7 +26,11 @@ module head() {
 }
 
 module body() {
-    %cube([s(80), s(40), s(80)], center=true);
+//    %cube([s(80), s(40), s(80)], center=true);
+    translate([s(0),s(0),s(45)])
+        cube([s(80), s(40), s(50)], center=true);
+    translate([s(0),s(0),s()])
+        cube([s(80), s(40), s(30)], center=true);
 }
 
 module rightArm() {
@@ -52,10 +57,15 @@ module rightLeg() {
         translate([s(0), s(0), s(45)]) 
             cube([s(20), s(20), s(40)], center=true);
 
-    // hand
+    // little leg
     color([0,1,0])
         translate([s(0), s(0), s(0)]) 
             cube([s(20), s(20), s(40)], center=true);    
+    // foot
+    color([0,1,0])
+        translate([s(0), s(6), s(-30)]) 
+            cube([s(20), s(40), s(10)], center=true);  
+        
 }
 
 module leftLeg() {
