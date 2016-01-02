@@ -230,11 +230,21 @@ module main() {
             servo_sg5010(false,false);
         }
     }
+    translate([
+        s(0),
+        s(servo_9g_l/2-servo_9g_axis_center_right_margin),
+        s(-30)]) {
+        rotate([0,0,180]) {
+            servo_9g(false,false);
+        }
+    }
+
 
     //robot frame
     color([0,1,0],0.6) union(){
-        translate([s(0),s(0),s(0)])
+        translate([s(0),s(0),s(0)]) {
             head();
+        }
         translate([s(0),s(0),s(22-110)]) {
             body();
         }
@@ -242,10 +252,12 @@ module main() {
             leftArm();
             rightArm();
         }
-        translate([s(-20), s(0), s(-60-110)])
+        translate([s(-20), s(0), s(-60-110)]) {
             leftLeg();
-        translate([s(20), s(0), s(-60-110)])
+        }
+        translate([s(20), s(0), s(-60-110)]) {
             rightLeg();
+        }
     }
 
 }
