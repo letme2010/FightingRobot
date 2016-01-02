@@ -8,7 +8,7 @@ module rightLegEngine() {
             servo_sg5010(false,false);
         }
     }
-    translate([20,0,-140]) {
+    translate([20,0,-125]) {
         rotate([90,0,90]) {
             servo_sg5010(false,false);
         }
@@ -16,22 +16,22 @@ module rightLegEngine() {
     translate([
             20, 
         (servo_9g_l/2-servo_9g_axis_center_right_margin),
-        -190]) {
+        -165]) {
         rotate([180,180,0]) {
             servo_9g(false,false);
         }
     }
-    translate([20,0,-240]) {
+    translate([20,0,-197]) {
         rotate([90,0,90]) {
             servo_sg5010(false,false);
         }
     }
-    translate([20,0,-350]) {
+    translate([20,0,-270]) {
         rotate([90,180,90]) {
             servo_9g(false,false);
         }
     }
-    translate([20, -23, -350]) {
+    translate([20, -23, -270]) {
         rotate([90,180,0]) {
             servo_9g(false,false);
         }
@@ -50,14 +50,14 @@ module rightArmEngine() {
         }
     }
     translate([
-                55,
-                -(servo_9g_l/2-servo_9g_axis_center_right_margin),
-                -60]) {
+        55,
+        -(servo_9g_l/2-servo_9g_axis_center_right_margin),
+        -50]) {
         rotate([0,180,0]) {
             servo_9g(false,false);
         }
     }
-    translate([55, 0, -100]) {
+    translate([55, 0, -82]) {
         rotate([90,0,0]) {
             rotate([0,90,0]) {
                 servo_9g(false,false);
@@ -65,21 +65,12 @@ module rightArmEngine() {
         }
     }
     translate([
-                55,
-                -(servo_9g_l/2-servo_9g_axis_center_right_margin),
-                -130]) {
+        55,
+        -(servo_9g_l/2-servo_9g_axis_center_right_margin),
+        -104]) {
         rotate([0,180,0]) {
             servo_9g(false,false);
         }
-    }
-}
-
-module rightBranchEngine() {
-    translate([30,0,0]) {
-        rightArmEngine();
-    }
-    translate([20,0,-34]) {
-        rightLegEngine();
     }
 }
 
@@ -210,14 +201,33 @@ module main() {
 //    }
 
     //engine
-    rightBranchEngine();
+    translate([30,0,0]) {
+        rightArmEngine();
+    }
+    translate([20,0,-34]) {
+        rightLegEngine();
+    }
     mirror([1,0,0]) {
-        rightBranchEngine();
+        translate([30,0,0]) {
+            rightArmEngine();
+        }
+        translate([20,0,-34]) {
+            rightLegEngine();
+        }
+    }
+    //nick servo
+    translate([
+        s(0),
+        s(servo_9g_l/2-servo_9g_axis_center_right_margin),
+        s(-34)]) {
+        rotate([0,0,180]) {
+            servo_9g(false,false);
+        }
     }
     translate([
         s(0),
         s(0),
-        s(-72)]) {
+        s(-66)]) {
         rotate([90,180,180]) {
             servo_sg5010(false,false);
         }
@@ -225,17 +235,9 @@ module main() {
     translate([
         s(0),
         s(servo_sg5010_l/2-servo_sg5010_axis_center_right_margin),
-        s(-118)]) {
+        s(-116)]) {
         rotate([0,0,180]) {
             servo_sg5010(false,false);
-        }
-    }
-    translate([
-        s(0),
-        s(servo_9g_l/2-servo_9g_axis_center_right_margin),
-        s(-30)]) {
-        rotate([0,0,180]) {
-            servo_9g(false,false);
         }
     }
 
@@ -246,17 +248,17 @@ module main() {
             head();
         }
         translate([s(0),s(0),s(22-110)]) {
-            body();
+//            body();
         }
         translate([0,0,-110]) {
-            leftArm();
-            rightArm();
+//            leftArm();
+//            rightArm();
         }
         translate([s(-20), s(0), s(-60-110)]) {
-            leftLeg();
+//            leftLeg();
         }
         translate([s(20), s(0), s(-60-110)]) {
-            rightLeg();
+//            rightLeg();
         }
     }
 
