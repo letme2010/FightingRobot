@@ -39,25 +39,25 @@ module rightLegEngine() {
 }
 
 module rightArmEngine() {
-    translate([0,0,-40]) {
+    translate([5,0,-40]) {
         rotate([90,0,90]) {
             servo_sg5010(false,false);
         }
     }
-    translate([s(48),0,s(-30)]) {
-        rotate([-90,-90,0]) {
+    translate([s(45),0,s(-40)]) {
+        rotate([-90,-180,0]) {
             servo_sg5010(false,false);
         }
     }
     translate([
-        58,
+        45,
         -(servo_9g_l/2-servo_9g_axis_center_right_margin),
-        -54]) {
+        -72]) {
         rotate([0,180,0]) {
             servo_9g(false,false);
         }
     }
-    translate([58, 0, -86]) {
+    translate([45, 0, -102]) {
         rotate([90,0,0]) {
             rotate([0,90,0]) {
                 servo_9g(false,false);
@@ -65,9 +65,9 @@ module rightArmEngine() {
         }
     }
     translate([
-        58,
+        45,
         -(servo_9g_l/2-servo_9g_axis_center_right_margin),
-        -108]) {
+        -120]) {
         rotate([0,180,0]) {
             servo_9g(false,false);
         }
