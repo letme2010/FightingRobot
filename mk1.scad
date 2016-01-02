@@ -2,65 +2,84 @@ include <const.scad>;
 use <std.scad>;
 fn = 12;
 
-module main() {
-    //engine
-    {
-        //right system
-        translate([20,0,-40]) {
-            rotate([90,0,90]) {
-                servo_sg5010();
-            }
+module rightLegEngine() {
+    translate([12,0,-83]) {
+        rotate([90,270,180]) {
+            servo_sg5010(false,false);
         }
-        translate([s(55),0,s(-19.5)]) {
-            rotate([-90,0,180]) {
-                servo_sg5010();
-            }
-        }
-        translate([
-                    55,
-                    -(servo_9g_l/2-servo_9g_axis_center_right_margin),
-                    -60]) {
-            rotate([0,180,0]) {
-                servo_9g();
-            }
-        }
-        translate([
-                    55,
-                    0,
-                    -100]) {
-            rotate([90,0,0]) {
-                rotate([0,90,0]) {
-                    servo_9g();
-                }
-            }
-        }
-        translate([
-                    55,
-                    -(servo_9g_l/2-servo_9g_axis_center_right_margin),
-                    -200]) {
-            rotate([0,180,0]) {
-                servo_9g();
-            }
-        }
-
-
     }
-    
-    //robot frame
-    color([1,1,1],0.2) union(){
-        translate([s(0),s(0),s(0)])
-            head();
-        translate([s(0),s(0),s(22-110)]) {
-            body();
+    translate([20,0,-140]) {
+        rotate([90,0,90]) {
+            servo_sg5010(false,false);
         }
-        translate([0,0,-110]) {
-            leftArm();
-            rightArm();
+    }
+    translate([
+            20, 
+        (servo_9g_l/2-servo_9g_axis_center_right_margin),
+        -190]) {
+        rotate([180,180,0]) {
+            servo_9g(false,false);
         }
-        translate([s(-20), s(0), s(-60-110)])
-            leftLeg();
-        translate([s(20), s(0), s(-60-110)])
-            rightLeg();
+    }
+    translate([20,0,-240]) {
+        rotate([90,0,90]) {
+            servo_sg5010(false,false);
+        }
+    }
+    translate([20,0,-350]) {
+        rotate([90,180,90]) {
+            servo_9g(false,false);
+        }
+    }
+    translate([20, -23, -350]) {
+        rotate([90,180,0]) {
+            servo_9g(false,false);
+        }
+    }
+}
+
+module rightArmEngine() {
+    translate([20,0,-40]) {
+        rotate([90,0,90]) {
+            servo_sg5010(false,false);
+        }
+    }
+    translate([s(55),0,s(-19.5)]) {
+        rotate([-90,0,0]) {
+            servo_sg5010(false,false);
+        }
+    }
+    translate([
+                55,
+                -(servo_9g_l/2-servo_9g_axis_center_right_margin),
+                -60]) {
+        rotate([0,180,0]) {
+            servo_9g(false,false);
+        }
+    }
+    translate([55, 0, -100]) {
+        rotate([90,0,0]) {
+            rotate([0,90,0]) {
+                servo_9g(false,false);
+            }
+        }
+    }
+    translate([
+                55,
+                -(servo_9g_l/2-servo_9g_axis_center_right_margin),
+                -130]) {
+        rotate([0,180,0]) {
+            servo_9g(false,false);
+        }
+    }
+}
+
+module rightBranchEngine() {
+    translate([30,0,0]) {
+        rightArmEngine();
+    }
+    translate([20,0,-34]) {
+        rightLegEngine();
     }
 }
 
@@ -81,10 +100,10 @@ module head() {
 module body() {
 //    %cube([s(80), s(40), s(80)], center=true);
     color([1,1,1]) {
-        translate([s(0),s(0),s(45)])
-            cube([s(80), s(40), s(50)], center=true);
-        translate([s(0),s(0),s()])
-            cube([s(80), s(40), s(30)], center=true);
+        translate([s(0),s(0),s(38)])
+            cube([s(140), s(40), s(65)], center=true);
+        translate([s(0),s(0),s(-26)])
+            cube([s(140), s(40), s(30)], center=true);
     }
 }
 
@@ -128,6 +147,108 @@ module leftLeg() {
         rightLeg();
 }
 
+module ssc() {
+    color([1,0,0]) {
+        cube(center=true,[64,10,58]);
+    }
+}
+
+module esp8266() {
+    color([1,0,1]) {
+        cube(center=true,[13.51,10,24.36]);
+    }    
+}
+
+module arduino_nano() {
+    color([0,0,1]) {
+        cube(center=true,[18,10,45]);
+    }        
+}
+
+module transformer() {
+    color([0,1,0]) {
+        cube(center=true,[18,10,32]);
+    }
+}
+
+module circuit_system() {
+    translate([0,-30,-50]) {
+        ssc();
+    }
+    translate([-50,-30,-60]) {
+        rotate([0,90,0]) {
+            transformer();
+        }
+    }
+    translate([-50,-30,-40]) {
+        rotate([0,90,0]) {
+            esp8266();  
+        }
+    }
+    translate([50,-30,-50]) {
+        arduino_nano();
+    }
+}
+
+module main() {
+    //standard
+    color([1,0,0]) {
+        translate([120,0,0]) {
+            rotate([180,0,0]) {
+                cube([10,10,300],center=false);
+            }
+        }
+    }
+    //circuit
+//    circuit_system();
+
+//    translate([0,0,-40]) {
+//        battery_18650();
+//        rotate([-90,0,0]) {
+//            battery_18650();
+//        }
+//    }
+
+    //engine
+    rightBranchEngine();
+    mirror([1,0,0]) {
+        rightBranchEngine();
+    }
+    translate([
+        s(0),
+        s(0),
+        s(-72)]) {
+        rotate([90,180,180]) {
+            servo_sg5010(false,false);
+        }
+    }
+    translate([
+        s(0),
+        s(servo_sg5010_l/2-servo_sg5010_axis_center_right_margin),
+        s(-118)]) {
+        rotate([0,0,180]) {
+            servo_sg5010(false,false);
+        }
+    }
+
+    //robot frame
+    color([0,1,0],0.6) union(){
+        translate([s(0),s(0),s(0)])
+            head();
+        translate([s(0),s(0),s(22-110)]) {
+            body();
+        }
+        translate([0,0,-110]) {
+            leftArm();
+            rightArm();
+        }
+        translate([s(-20), s(0), s(-60-110)])
+            leftLeg();
+        translate([s(20), s(0), s(-60-110)])
+            rightLeg();
+    }
+
+}
 
 main();
 
